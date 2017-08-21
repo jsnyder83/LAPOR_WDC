@@ -7,7 +7,7 @@
 		$.ajax({ 
 			url: connectionData.endpoint + 
 				'?path=' + connectionData.reportPath,
-			type: "GET",
+			type: "POST",
 			beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'apikey ' + tableau.password) }, 
 			success: function(data) {
 				var $xml = $( data );
@@ -59,7 +59,7 @@
 			}
 			tableau.username = JSON.stringify(connectionData);
 			tableau.password = $('#txtApiKey').val();
-			tableau.connectionName = "ExLibris";
+			tableau.connectionName = "LAPOR! API";
 			tableau.submit();
 		});
 	});
