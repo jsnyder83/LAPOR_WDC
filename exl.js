@@ -1,7 +1,24 @@
 (function () {
 	var myConnector = tableau.makeConnector();
-	
-
+	myConnector.init = function (initCallback) {
+		initCallback();
+		tableau.authType = tableau.authTypeEnum.custom;
+		if (tableau.username) {
+			var connectionData = JSON.parse(tableau.username);
+			$('#txtReportPath').val(connectionData.reportPath);
+			$('#selectEndpoint').val(connectionData.endpoint);			
+			$('#selectMaxRows').val(connectionData.maxRows);
+			if (connectionData.apikey) {
+				$('#txtApiKey').val(connectionData.apikey);
+			} else {
+				$('#chkRemember').prop('checked',false);
+			}
+		}
+		if (tableau.phase == tableau.phaseEnum.authPhase) {
+			if (tableau.username && tableau.password)
+				tableau.submit();
+		}
+	}
 	myConnector.getSchema = function (schemaCallback) {
 		var connectionData = JSON.parse(tableau.username);
 		$.ajax({ 
